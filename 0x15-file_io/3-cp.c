@@ -4,11 +4,12 @@
 
 char *create_buffer(char *file);
 void close_file(int yd);
+
 /**
- * create_buffer - allocate 1024 bytes for the buffers.
- * @file: A name of the file buffers be storing chars for.
+ * create_buffer - Allocate 1024 byte for buffer.
+ * @file: A name of  files bufferbe storing chars for.
  *
- * Return: a pointers to the newly-allocates buffers.
+ * Return: The pointer to newly-allocated buffer.
  */
 char *create_buffer(char *file)
 {
@@ -27,23 +28,29 @@ char *create_buffer(char *file)
 }
 
 /**
- * close_file - closed files descriptor.
- * @fd: the files descriptor  make closed.
+ * close_file - Closed file descriptor.
+ * @yd: the file descriptor is closed.
  */
 void close_file(int yd)
 {
-	int m;
+	int v;
 
-	m = close(yd);
+	v = close(yd);
 
-	if (m == -1)
+	if (v == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't closed yd %d\n", yd);
+		dprintf(STDERR_FILENO, "Error: Can't close yd %d\n", yd);
 		exit(100);
 	}
 }
 
 /**
+ * @argc: The number of arguments supplied to the program.
+ * @argv: An array of pointers to the arguments.
+ * main - Copies the contents of a file to another file.
+ *
+ * Return: 0 on success.
+ *
  * If file_to or file_from cannot be closed - exit code 100.
  * If file_to cannot be created or written to - exit code 99.
  * If file_from does not exist or cannot be read - exit code 98.
@@ -51,7 +58,7 @@ void close_file(int yd)
  */
 int main(int argc, char *argv[])
 {
-	int to, nm, t, x;
+	int from, nm, g, x;
 	char *buffer;
 
 	if (argc != 3)
@@ -61,12 +68,12 @@ int main(int argc, char *argv[])
 	}
 
 	buffer = create_buffer(argv[2]);
-	to = open(argv[1], O_RDONLY);
-	t = read(from, buffer, 1024);
+	from = open(argv[1], O_RDONLY);
+	g = read(from, buffer, 1024);
 	nm = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
 
 	do {
-		if (to == -1 || t == -1)
+		if (from == -1 || g == -1)
 		{
 			dprintf(STDERR_FILENO,
 				"Error: Can't read from file %s\n", argv[1]);
@@ -74,7 +81,7 @@ int main(int argc, char *argv[])
 			exit(98);
 		}
 
-		x = write(nm, buffer, t);
+                x = write(to, buffer, r);
 		if (nm == -1 || x == -1)
 		{
 			dprintf(STDERR_FILENO,
@@ -83,14 +90,15 @@ int main(int argc, char *argv[])
 			exit(99);
 		}
 
-		t = read(to, buffer, 1024);
+		g = read(from, buffer, 1024);
 		nm = open(argv[2], O_WRONLY | O_APPEND);
 
-	} while (t > 0);
+	} while (g > 0);
 
 	free(buffer);
-	close_file(to);
+	close_file(from);
 	close_file(nm);
 
 	return (0);
 }
+
