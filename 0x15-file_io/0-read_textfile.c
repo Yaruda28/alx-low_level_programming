@@ -1,34 +1,27 @@
-#include <unistd.h>
-#include <fcntl.h>
+#include "main.h"
 #include <stdlib.h>
-
+/**
+ * read_textfile- text file print to STDOUT.
+ * @filename: text file be readable
+ * @letters: numbers of letters will read
+ * Return: w- actual numbers of bytes read and print
+ *        0 when function fail or filename was NULL.
+ */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-  int fd;
-  ssize_t bytes_read = 0, bytes_written = 0;
-  char *buf;
+	char *yar;
+	ssize_t yd;
+	ssize_t x;
+	ssize_t u;
 
-  if (filename == NULL)
-    return (0);
+	yd = open(filename, O_RDONLY);
+	if (yd == -1)
+		return (0);
+	yar = malloc(sizeof(char) * letters);
+	u = read(yd, yar, letters);
+	x = write(STDOUT_FILENO, yar, u);
 
-  fd = open(filename, O_RDONLY);
-  if (fd == -1)
-    return (0);
-
-  buf = malloc(letters * sizeof(char));
-  if (buf == NULL)
-    return (0);
-
-  bytes_read = read(fd, buf, letters);
-  if (bytes_read == -1)
-    return (0);
-
-  bytes_written = write(STDOUT_FILENO, buf, bytes_read);
-  if (bytes_written == -1 || bytes_written != bytes_read)
-    return (0);
-
-  free(buf);
-  close(fd);
-
-  return (bytes_read);
+	free(yar);
+	close(yd);
+	return (x);
 }
