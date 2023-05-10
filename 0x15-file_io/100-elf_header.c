@@ -22,6 +22,7 @@ void close_elf(int elf);
  *
  * Description: when the file was not an ELF file - exit code 98.
  */
+
 void check_elf(unsigned char *e_ident)
 {
         int ind;
@@ -100,7 +101,8 @@ void print_version(unsigned char *e_ident)
                 printf("\n");
                 break;
         }
-}/**
+}
+/**
  * print_osabi - The Prints OS/ABI of an ELF header.
  * @e_ident: The  pointer tobe an array contained the ELF version.
  */
@@ -211,7 +213,9 @@ void print_entry(unsigned long int e_entry, unsigned char *e_ident)
 
         else
                 printf("%#lx\n", e_entry);
-}/**
+}
+
+/**
  * close_elf - Closed the ELF file.
  * @elf: The file descriptors of an ELF file.
  *
@@ -237,7 +241,8 @@ void close_elf(int elf)
  *
  * Description: If the file is not an ELF File or
  * the function fails - exit code 98.
- */int main(int __attribute__((__unused__)) argc, char *argv[])
+ */
+int main(int __attribute__((__unused__)) argc, char *argv[])
 {
         Elf64_Ehdr *header;
         int o, r;
